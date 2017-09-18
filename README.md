@@ -46,3 +46,15 @@ server saat menangani request.
 4. 	Nginx, 500 B
 	5 KB Memory
 	1,10217 s
+
+## Analisis Hasil
+
+Setiap PC mempunyai batas maksimum thread yang dapat berjalan (sekitar 2000 thread).
+
+Apache dapat meresponse sebuah request dengan cepat karena kemampuan multithreadingnya.
+Yaitu sebuah request di-handle oleh sebuah thread, dan ketika sebuah request sudah selesai diberi response, thread tersebut langsung dimatikan, dan dibentuk lagi thread baru untuk request yang baru masuk.
+Sehingga Apache tidak pernah melampaui batas maksimum thread yang berjalan pada PC.
+
+Nginx gagal ketika serving file 20 KB karena single thread.
+Yaitu seluruh request di-handle oleh sebuah thread, dan kecepatan Nginx dalam memberi response kalah cepat dibanding kecepatan request baru yang masuk. Sehingga thread yang berjalan pada PC melampaui batas maksimumnya.
+Namun ketika Nginx serving file 500 B, kecepatan dalam memberi response masih lebih cepat dibanding kecepatan request yang baru masuk, sehingga PC belum melampaui batas maksimum thread yang berjalan.
